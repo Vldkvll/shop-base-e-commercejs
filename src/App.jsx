@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { commerce } from './lib/commerce';
 
 // import Navbar from './components/NavBar/NavBar'
 // import Products from './components/Products/Products'
 
-import { Products, Navbar } from './components';
+import { Products, Navbar, Cart } from './components';
 
 const App = () => {
     const [products, setProducts] = useState([]);
@@ -26,31 +27,24 @@ const App = () => {
     const handleAddToCart = async (productId, quantity) => {
         const item = await commerce.cart.add(productId, quantity);
 
-        console.log("cart handleAddToCart", quantity)
-        console.log( item)
-        console.log( item.cart.total_items)
-
-        // console.log(cart)
-
         setCart(item.cart)
     }
 
     useEffect(()=> {
         fetchProducts();
         fetchCart();
-    }, [])
+    }, []);
 
-    // console.log(products)
-    console.log("cart")
-    console.log(cart)
 
     return (    
         <div>
             <Navbar totalItems={cart.total_items}/>
-            <Products 
+            {/* <Products 
             products={products}
             onAddToCart={handleAddToCart}
-            />
+            /> */}
+            {/* { !cart.length ? undefined : <Cart cart={cart} /> } */}
+            <Cart cart={cart} />
         </div>
     )
 }
