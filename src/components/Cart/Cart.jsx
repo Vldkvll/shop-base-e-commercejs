@@ -1,29 +1,43 @@
 import React from "react";
 import { Container, Typography, Grid, Button } from "@material-ui/core";
+import { Link, } from "react-router-dom";
 
 import CartItem from "./CartItem/CartItem";
 import useStyles from "./styles";
 
-const Cart = ({ cart }) => {
+const Cart = ({
+    cart,
+    handleUpateCartQty,
+    handleRemoveFromCart,
+    handleEmptyCart,
+}) => {
     const classes = useStyles();
 
     //  or if ?.   works
     // const isEmpty = !cart.line_items?.length;
-    
-    
-    
+
     const EmptyCart = () => (
-        <Typography variant="subtitle1">
-            You have no items in your shopping cart, start adding some!
+        <Typography variant="subtitle2">
+            You have no items in your shopping cart,
+            <Typography variant="subtitle1">
+            <Link to="/" className={classes.link}>
+                {" "}
+                start adding some!{" "}
+            </Link>
+
+            </Typography>
         </Typography>
     );
-    
+
     const FilledCard = () => (
         <>
             <Grid container spacing={3}>
                 {cart.line_items.map((item) => (
                     <Grid item xs={12} sm={4} key={item.id}>
-                        <CartItem item={item}/>
+                        <CartItem item={item}
+                        onUpateCartQty={handleUpateCartQty}
+                        onRemoveFromCart={handleRemoveFromCart}
+                         />
                     </Grid>
                 ))}
             </Grid>
@@ -38,7 +52,9 @@ const Cart = ({ cart }) => {
                         type="button"
                         size="large"
                         variant="contained"
-                        >
+                        // onClick={()=>handleEmptyCart()}
+                        onClick={handleEmptyCart}
+                    >
                         Empty Cart
                     </Button>
                     <Button
@@ -47,15 +63,15 @@ const Cart = ({ cart }) => {
                         type="button"
                         size="large"
                         variant="contained"
-                        >
+                    >
                         Checkout
                     </Button>
                 </div>
             </div>
         </>
     );
-    
-    if (!cart.line_items) return "....Loading"
+
+    if (!cart.line_items) return "....Loading";
 
     return (
         <Container>
