@@ -6,7 +6,7 @@ import { commerce } from "./lib/commerce";
 // import Navbar from './components/NavBar/NavBar'
 // import Products from './components/Products/Products'
 
-import { Products, Navbar, Cart } from "./components";
+import { Products, Navbar, Cart, Checkout } from "./components";
 
 const App = () => {
     const [products, setProducts] = useState([]);
@@ -71,6 +71,9 @@ const App = () => {
                             handleRemoveFromCart={handleRemoveFromCart}
                             handleEmptyCart={handleEmptyCart}
                         />
+                    </Route>
+                    <Route exact path="/checkout">
+                        <Checkout cart={cart} />
                     </Route>
                 </Switch>
             </div>
